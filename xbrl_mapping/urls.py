@@ -16,5 +16,5 @@ urlpatterns = [
     path('template/', views.get_xbrl_template, name='get-xbrl-template'),
     path('bulk/', views.bulk_operations, name='bulk-operations'),
     path('mapping-input/', views.MappingInputView.as_view(), name='mapping-input'),
-    path('mapping-input/<uuid:mapping_id>/', views.MappingInputView.as_view(), name='get-mapping-input'),
+    #path('mapping-input/<uuid:mapping_id>/', views.MappingInputView.as_view(), name='get-mapping-input'),
 ]

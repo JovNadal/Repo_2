@@ -33,9 +33,9 @@ class MappingInputView(APIView):
         serializer = MappingInputSerializer(mapping_inputs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    def get(self, request, mapping_id):
-        mapping_instance = get_object_or_404(MappingInput, id=mapping_id)
-        return Response({"id": str(mapping_instance.id), "content": mapping_instance.content})
+    #def get(self, request, mapping_id):
+        #mapping_instance = get_object_or_404(MappingInput, id=mapping_id)
+        #return Response({"id": str(mapping_instance.id), "content": mapping_instance.content})
 
 
 FIELD_MAPPING = {
