@@ -1,0 +1,947 @@
+{
+    "tagged_data": {
+        "filingInformation": {
+            "NameOfCompany": {
+                "value": "ACME Corporation",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "NameOfCompany",
+                        "element_id": "sg-dei_NameOfCompany",
+                        "abstract": false,
+                        "data_type": "xbrli:stringItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "UniqueEntityNumber": {
+                "value": "12345678A",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "UniqueEntityNumber",
+                        "element_id": "sg-dei_UniqueEntityNumber",
+                        "abstract": false,
+                        "data_type": "sg-types:UENItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "CurrentPeriodStartDate": {
+                "value": "2022-01-01",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "CurrentPeriodStartDate",
+                        "element_id": "sg-dei_CurrentPeriodStartDate",
+                        "abstract": false,
+                        "data_type": "xbrli:dateItemType",
+                        "balance_type": null,
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "CurrentPeriodEndDate": {
+                "value": "2022-12-31",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "CurrentPeriodEndDate",
+                        "element_id": "sg-dei_CurrentPeriodEndDate",
+                        "abstract": false,
+                        "data_type": "xbrli:dateItemType",
+                        "balance_type": null,
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "PriorPeriodStartDate": {
+                "value": "2021-01-01",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "PriorPeriodStartDate",
+                        "element_id": "sg-dei_PriorPeriodStartDate",
+                        "abstract": false,
+                        "data_type": "xbrli:dateItemType",
+                        "balance_type": null,
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "TypeOfXBRLFiling": {
+                "value": "Full",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "TypeOfXBRLFiling",
+                        "element_id": "sg-dei_TypeOfXBRLFiling",
+                        "abstract": false,
+                        "data_type": "sg-types:XBRLFilingItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "NatureOfFinancialStatementsCompanyLevelOrConsolidated": {
+                "value": "Company",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "NatureOfFinancialStatementsCompanyLevelOrConsolidated",
+                        "element_id": "sg-dei_NatureOfFinancialStatementsCompanyLevelOrConsolidated",
+                        "abstract": false,
+                        "data_type": "sg-types:NatureOfFinancialStatementsItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "TypeOfAccountingStandardUsedToPrepareFinancialStatements": {
+                "value": "IFRS",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "TypeOfAccountingStandardUsedToPrepareFinancialStatements",
+                        "element_id": "sg-dei_TypeOfAccountingStandardUsedToPrepareFinancialStatements",
+                        "abstract": false,
+                        "data_type": "sg-types:AccountingStandardsItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "DateOfAuthorisationForIssueOfFinancialStatements": {
+                "value": "2023-03-15",
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "DateOfAuthorisationForIssueOfFinancialStatements",
+                        "element_id": "sg-as_DateOfAuthorisationForIssueOfFinancialStatements",
+                        "abstract": false,
+                        "data_type": "xbrli:dateItemType",
+                        "balance_type": null,
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "TypeOfStatementOfFinancialPosition": {
+                "value": "Classified",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "TypeOfStatementOfFinancialPosition",
+                        "element_id": "sg-dei_TypeOfStatementOfFinancialPosition",
+                        "abstract": false,
+                        "data_type": "sg-types:StatementOfFinancialPositionItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "WhetherTheFinancialStatementsArePreparedOnGoingConcernBasis": {
+                "value": true,
+                "tags": []
+            },
+            "WhetherThereAreAnyChangesToComparativeAmounts": {
+                "value": false,
+                "tags": []
+            },
+            "DescriptionOfPresentationCurrency": {
+                "value": "USD",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "DescriptionOfPresentationCurrency",
+                        "element_id": "sg-dei_DescriptionOfPresentationCurrency",
+                        "abstract": false,
+                        "data_type": "sg-types:CurrencyCodeItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "DescriptionOfFunctionalCurrency": {
+                "value": "USD",
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "DescriptionOfFunctionalCurrency",
+                        "element_id": "sg-as_DescriptionOfFunctionalCurrency",
+                        "abstract": false,
+                        "data_type": "sg-types:CurrencyCodeItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "LevelOfRoundingUsedInFinancialStatements": {
+                "value": "Units",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "LevelOfRoundingUsedInFinancialStatements",
+                        "element_id": "sg-dei_LevelOfRoundingUsedInFinancialStatements",
+                        "abstract": false,
+                        "data_type": "sg-types:LevelOfRoundingItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "DescriptionOfNatureOfEntitysOperationsAndPrincipalActivities": {
+                "value": "Manufacturing and distribution of consumer electronics.",
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "DescriptionOfNatureOfEntitysOperationsAndPrincipalActivities",
+                        "element_id": "sg-as_DescriptionOfNatureOfEntitysOperationsAndPrincipalActivities",
+                        "abstract": false,
+                        "data_type": "xbrli:stringItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "PrincipalPlaceOfBusinessIfDifferentFromRegisteredOffice": {
+                "value": "123 Business Street, Industrial Park",
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "PrincipalPlaceOfBusinessIfDifferentFromRegisteredOffice",
+                        "element_id": "sg-as_PrincipalPlaceOfBusinessIfDifferentFromRegisteredOffice",
+                        "abstract": false,
+                        "data_type": "xbrli:stringItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "WhetherCompanyOrGroupIfConsolidatedAccountsArePreparedHasMoreThan50Employees": {
+                "value": true,
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "WhetherCompanyOrGroupIfConsolidatedAccountsArePreparedHasMoreThan50Employees",
+                        "element_id": "sg-dei_WhetherCompanyOrGroupIfConsolidatedAccountsArePreparedHasMoreThan50Employees",
+                        "abstract": false,
+                        "data_type": "sg-types:YesNoItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "NameOfParentEntity": null,
+            "NameOfUltimateParentOfGroup": null,
+            "TaxonomyVersion": {
+                "value": "2022.2",
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "TaxonomyVersion",
+                        "element_id": "sg-dei_TaxonomyVersion",
+                        "abstract": false,
+                        "data_type": "sg-types:TaxonomyVersionItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "NameAndVersionOfSoftwareUsedToGenerateXBRLFile": {
+                "value": "XBRL Generator v1.0",
+                "tags": []
+            },
+            "HowWasXBRLFilePrepared": {
+                "value": "Automated",
+                "tags": []
+            },
+            "meta_tags": []
+        },
+        "directorsStatement": {
+            "WhetherInDirectorsOpinionFinancialStatementsAreDrawnUpSoAsToExhibitATrueAndFairView": {
+                "value": true,
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "WhetherInDirectorsOpinionFinancialStatementsAreDrawnUpSoAsToExhibitATrueAndFairView",
+                        "element_id": "sg-dei_WhetherInDirectorsOpinionFinancialStatementsAreDrawnUpSoAsToExhibitATrueAndFairView",
+                        "abstract": false,
+                        "data_type": "sg-types:YesNoItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "WhetherThereAreReasonableGroundsToBelieveThatCompanyWillBeAbleToPayItsDebtsAsAndWhenTheyFallDueAtDateOfStatement": {
+                "value": true,
+                "tags": [
+                    {
+                        "prefix": "sg-dei",
+                        "element_name": "WhetherThereAreReasonableGroundsToBelieveThatCompanyWillBeAbleToPayItsDebtsAsAndWhenTheyFallDueAtDateOfStatement",
+                        "element_id": "sg-dei_WhetherThereAreReasonableGroundsToBelieveThatCompanyWillBeAbleToPayItsDebtsAsAndWhenTheyFallDueAtDateOfStatement",
+                        "abstract": false,
+                        "data_type": "sg-types:YesNoItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "meta_tags": []
+        },
+        "auditReport": {
+            "TypeOfAuditOpinionInIndependentAuditorsReport": {
+                "value": "Unqualified",
+                "tags": [
+                    {
+                        "prefix": "sg-ssa",
+                        "element_name": "TypeOfAuditOpinionInIndependentAuditorsReport",
+                        "element_id": "sg-ssa_TypeOfAuditOpinionInIndependentAuditorsReport",
+                        "abstract": false,
+                        "data_type": "xbrli:stringItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "AuditingStandardsUsedToConductTheAudit": {
+                "value": "ISA",
+                "tags": []
+            },
+            "WhetherThereIsAnyMaterialUncertaintyRelatingToGoingConcern": {
+                "value": false,
+                "tags": [
+                    {
+                        "prefix": "sg-ssa",
+                        "element_name": "WhetherThereIsAnyMaterialUncertaintyRelatingToGoingConcern",
+                        "element_id": "sg-ssa_WhetherThereIsAnyMaterialUncertaintyRelatingToGoingConcern",
+                        "abstract": false,
+                        "data_type": "sg-types:YesNoItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "WhetherInAuditorsOpinionAccountingAndOtherRecordsRequiredAreProperlyKept": {
+                "value": true,
+                "tags": [
+                    {
+                        "prefix": "sg-ssa",
+                        "element_name": "WhetherInAuditorsOpinionAccountingAndOtherRecordsRequiredAreProperlyKeptInAccordanceWithCompaniesAct",
+                        "element_id": "sg-ssa_WhetherInAuditorsOpinionAccountingAndOtherRecordsRequiredAreProperlyKeptInAccordanceWithCompaniesAct",
+                        "abstract": false,
+                        "data_type": "sg-types:YesNoItemType",
+                        "balance_type": null,
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "meta_tags": []
+        },
+        "statementOfFinancialPosition": {
+            "currentAssets": {
+                "CashAndBankBalances": {
+                    "value": 150000.0,
+                    "tags": []
+                },
+                "TradeAndOtherReceivablesCurrent": {
+                    "value": 300000.0,
+                    "tags": []
+                },
+                "CurrentFinanceLeaseReceivables": {
+                    "value": 20000.0,
+                    "tags": []
+                },
+                "CurrentDerivativeFinancialAssets": {
+                    "value": 5000.0,
+                    "tags": []
+                },
+                "CurrentFinancialAssetsMeasuredAtFairValueThroughProfitOrLoss": {
+                    "value": 10000.0,
+                    "tags": []
+                },
+                "OtherCurrentFinancialAssets": {
+                    "value": 0,
+                    "tags": []
+                },
+                "DevelopmentProperties": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "Inventories": {
+                    "value": 45000.0,
+                    "tags": []
+                },
+                "OtherCurrentNonfinancialAssets": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "NoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "CurrentAssets": {
+                    "value": 500000.0,
+                    "tags": []
+                }
+            },
+            "nonCurrentAssets": {
+                "TradeAndOtherReceivablesNoncurrent": {
+                    "value": 200000.0,
+                    "tags": []
+                },
+                "NoncurrentFinanceLeaseReceivables": {
+                    "value": 15000.0,
+                    "tags": []
+                },
+                "NoncurrentDerivativeFinancialAssets": {
+                    "value": 7000.0,
+                    "tags": []
+                },
+                "NoncurrentFinancialAssetsMeasuredAtFairValueThroughProfitOrLoss": {
+                    "value": 12000.0,
+                    "tags": []
+                },
+                "OtherNoncurrentFinancialAssets": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "PropertyPlantAndEquipment": {
+                    "value": 800000.0,
+                    "tags": []
+                },
+                "InvestmentProperties": {
+                    "value": 50000.0,
+                    "tags": []
+                },
+                "Goodwill": {
+                    "value": 30000.0,
+                    "tags": []
+                },
+                "IntangibleAssetsOtherThanGoodwill": {
+                    "value": 25000.0,
+                    "tags": []
+                },
+                "InvestmentsInSubsidiariesAssociatesOrJointVentures": {
+                    "value": 100000.0,
+                    "tags": []
+                },
+                "DeferredTaxAssets": {
+                    "value": 15000.0,
+                    "tags": []
+                },
+                "OtherNoncurrentNonfinancialAssets": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "NoncurrentAssets": {
+                    "value": 1200000.0,
+                    "tags": []
+                }
+            },
+            "Assets": {
+                "value": 1700000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "Assets",
+                        "element_id": "sg-as_Assets",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "currentLiabilities": {
+                "TradeAndOtherPayablesCurrent": {
+                    "value": 100000.0,
+                    "tags": []
+                },
+                "CurrentLoansAndBorrowings": {
+                    "value": 50000.0,
+                    "tags": []
+                },
+                "CurrentFinancialLiabilitiesMeasuredAtFairValueThroughProfitOrLoss": {
+                    "value": 8000.0,
+                    "tags": []
+                },
+                "CurrentFinanceLeaseLiabilities": {
+                    "value": 6000.0,
+                    "tags": []
+                },
+                "OtherCurrentFinancialLiabilities": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "CurrentIncomeTaxLiabilities": {
+                    "value": 20000.0,
+                    "tags": []
+                },
+                "CurrentProvisions": {
+                    "value": 10000.0,
+                    "tags": []
+                },
+                "OtherCurrentNonfinancialLiabilities": {
+                    "value": 5000.0,
+                    "tags": []
+                },
+                "LiabilitiesClassifiedAsHeldForSale": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "CurrentLiabilities": {
+                    "value": 200000.0,
+                    "tags": []
+                }
+            },
+            "nonCurrentLiabilities": {
+                "TradeAndOtherPayablesNoncurrent": {
+                    "value": 40000.0,
+                    "tags": []
+                },
+                "NoncurrentLoansAndBorrowings": {
+                    "value": 60000.0,
+                    "tags": []
+                },
+                "NoncurrentFinancialLiabilitiesMeasuredAtFairValueThroughProfitOrLoss": {
+                    "value": 5000.0,
+                    "tags": []
+                },
+                "NoncurrentFinanceLeaseLiabilities": {
+                    "value": 4000.0,
+                    "tags": []
+                },
+                "OtherNoncurrentFinancialLiabilities": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "DeferredTaxLiabilities": {
+                    "value": 15000.0,
+                    "tags": []
+                },
+                "NoncurrentProvisions": {
+                    "value": 7000.0,
+                    "tags": []
+                },
+                "OtherNoncurrentNonfinancialLiabilities": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "NoncurrentLiabilities": {
+                    "value": 200000.0,
+                    "tags": []
+                }
+            },
+            "Liabilities": {
+                "value": 400000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "Liabilities",
+                        "element_id": "sg-as_Liabilities",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "instant",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "equity": {
+                "ShareCapital": {
+                    "value": 500000.0,
+                    "tags": []
+                },
+                "TreasuryShares": {
+                    "value": 10000.0,
+                    "tags": []
+                },
+                "AccumulatedProfitsLosses": {
+                    "value": 300000.0,
+                    "tags": []
+                },
+                "ReservesOtherThanAccumulatedProfitsLosses": {
+                    "value": 50000.0,
+                    "tags": []
+                },
+                "NoncontrollingInterests": {
+                    "value": 0.0,
+                    "tags": []
+                },
+                "Equity": {
+                    "value": 790000.0,
+                    "tags": []
+                }
+            },
+            "meta_tags": []
+        },
+        "incomeStatement": {
+            "revenue": {
+                "value": 1000000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "Revenue",
+                        "element_id": "sg-as_Revenue",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "other_income": {
+                "value": 50000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "OtherIncome",
+                        "element_id": "sg-as_OtherIncome",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "employee_benefits_expense": {
+                "value": 200000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "EmployeeBenefitsExpense",
+                        "element_id": "sg-as_EmployeeBenefitsExpense",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "depreciation_expense": {
+                "value": 50000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "DepreciationExpense",
+                        "element_id": "sg-as_DepreciationExpense",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "amortisation_expense": {
+                "value": 10000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "AmortisationExpense",
+                        "element_id": "sg-as_AmortisationExpense",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "repairs_maintenance_expense": {
+                "value": 15000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "RepairsAndMaintenanceExpense",
+                        "element_id": "sg-as_RepairsAndMaintenanceExpense",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "sales_marketing_expense": {
+                "value": 25000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "SalesAndMarketingExpense",
+                        "element_id": "sg-as_SalesAndMarketingExpense",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "other_expenses": {
+                "value": 10000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "OtherExpensesByNature",
+                        "element_id": "sg-as_OtherExpensesByNature",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "other_gains_losses": {
+                "value": 0.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "OtherGainsLosses",
+                        "element_id": "sg-as_OtherGainsLosses",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "finance_costs_net": {
+                "value": 8000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "FinanceCosts",
+                        "element_id": "sg-as_FinanceCosts",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "share_of_profit_loss_associates": {
+                "value": 0.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+                        "element_id": "sg-as_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "profit_loss_before_taxation": {
+                "value": 150000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ProfitLossBeforeTaxation",
+                        "element_id": "sg-as_ProfitLossBeforeTaxation",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "income_tax_expense_benefit": {
+                "value": 30000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "TaxExpenseBenefitContinuingOperations",
+                        "element_id": "sg-as_TaxExpenseBenefitContinuingOperations",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "debit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "profit_loss_discontinued_operations": {
+                "value": 0.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ProfitLossFromDiscontinuedOperations",
+                        "element_id": "sg-as_ProfitLossFromDiscontinuedOperations",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "total_profit_loss": {
+                "value": 120000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ProfitLoss",
+                        "element_id": "sg-as_ProfitLoss",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "profit_loss_attributable_to_owners": {
+                "value": 110000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ProfitLossAttributableToOwnersOfCompany",
+                        "element_id": "sg-as_ProfitLossAttributableToOwnersOfCompany",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "profit_loss_attributable_to_non_controlling": {
+                "value": 10000.0,
+                "tags": [
+                    {
+                        "prefix": "sg-as",
+                        "element_name": "ProfitLossAttributableToNoncontrollingInterests",
+                        "element_id": "sg-as_ProfitLossAttributableToNoncontrollingInterests",
+                        "abstract": false,
+                        "data_type": "xbrli:monetaryItemType",
+                        "balance_type": "credit",
+                        "period_type": "duration",
+                        "substitution_group": "xbrli:item"
+                    }
+                ]
+            },
+            "meta_tags": []
+        },
+        "notes": {
+            "tradeAndOtherReceivables": {
+                "TradeAndOtherReceivablesDueFromThirdParties": {
+                    "value": 25000.0,
+                    "tags": []
+                },
+                "TradeAndOtherReceivablesDueFromRelatedParties": {
+                    "value": 15000.0,
+                    "tags": []
+                },
+                "UnbilledReceivables": {
+                    "value": 5000.0,
+                    "tags": []
+                },
+                "OtherReceivables": {
+                    "value": 2000.0,
+                    "tags": []
+                },
+                "TradeAndOtherReceivables": {
+                    "value": 45000.0,
+                    "tags": []
+                },
+                "meta_tags": []
+            },
+            "tradeAndOtherPayables": {
+                "TradeAndOtherPayablesDueToThirdParties": {
+                    "value": null,
+                    "tags": []
+                },
+                "TradeAndOtherPayablesDueToRelatedParties": {
+                    "value": null,
+                    "tags": []
+                },
+                "DeferredIncome": {
+                    "value": null,
+                    "tags": []
+                },
+                "OtherPayables": {
+                    "value": null,
+                    "tags": []
+                },
+                "TradeAndOtherPayables": {
+                    "value": 55000.0,
+                    "tags": []
+                },
+                "meta_tags": []
+            },
+            "revenue": {
+                "RevenueFromPropertyTransferredAtPointInTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "RevenueFromGoodsTransferredAtPointInTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "RevenueFromServicesTransferredAtPointInTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "RevenueFromPropertyTransferredOverTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "RevenueFromConstructionContractsOverTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "RevenueFromServicesTransferredOverTime": {
+                    "value": null,
+                    "tags": []
+                },
+                "OtherRevenue": {
+                    "value": null,
+                    "tags": []
+                },
+                "Revenue": {
+                    "value": 120000.0,
+                    "tags": []
+                },
+                "meta_tags": []
+            },
+            "meta_tags": []
+        },
+        "meta_tags": []
+    }
+}
