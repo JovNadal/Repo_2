@@ -2,6 +2,11 @@ from django.db import models
 from .choices import *
 from .validators import validate_currency_code, validate_iso_date, validate_uen
 from django.core.validators import RegexValidator
+import uuid
+
+class MappingInput(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    content = models.JSONField()  # Stores JSON data
 
 class FilingInformation(models.Model):
     """Basic entity and filing information"""

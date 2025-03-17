@@ -2,11 +2,17 @@
 from rest_framework import serializers
 from .models import (
     FilingInformation, DirectorsStatement, AuditReport, 
-    CurrentAssets, NonCurrentAssets, CurrentLiabilities, 
+    CurrentAssets, MappingInput, NonCurrentAssets, CurrentLiabilities, 
     NonCurrentLiabilities, Equity, StatementOfFinancialPosition,
     IncomeStatement, TradeAndOtherReceivables, Revenue, Notes, PartialXBRL
 )
 
+
+class MappingInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MappingInput
+        fields = '__all__'  # Include all fields (id, content)
+        
 class FilingInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = FilingInformation

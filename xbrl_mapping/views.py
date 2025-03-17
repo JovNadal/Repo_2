@@ -1,14 +1,17 @@
 # views.py (enhanced)
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.decorators import api_view as api_decorator
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
-from .models import PartialXBRL
-from .serializers import PartialXBRLSerializer
+import re
+from xbrl_mapping.models import MappingInput, PartialXBRL
+from .serializers import MappingInputSerializer, PartialXBRLSerializer
 from .json_mapper import XBRLJSONMapper
+from rest_framework.views import APIView
 
 class PartialXBRLViewSet(viewsets.ModelViewSet):
     """
@@ -16,6 +19,24 @@ class PartialXBRLViewSet(viewsets.ModelViewSet):
     """
     queryset = PartialXBRL.objects.all()
     serializer_class = PartialXBRLSerializer
+    
+class MappingInputView(APIView):
+    def post(self, request):
+        serializer = MappingInputSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  # Save the validated data into the database
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        mapping_inputs = MappingInput.objects.all()  # Get all records
+        serializer = MappingInputSerializer(mapping_inputs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def get(self, request, mapping_id):
+        mapping_instance = get_object_or_404(MappingInput, id=mapping_id)
+        return Response({"id": str(mapping_instance.id), "content": mapping_instance.content})
+
 
 FIELD_MAPPING = {
     "WhetherTheFinancialStatementsArePreparedOnGoingConcernBasis": "is_going_concern",
@@ -37,7 +58,7 @@ def normalize_filing_information(data):
         normalized_data[new_key] = value
     return normalized_data
 
-@api_view(['POST'])
+@api_decorator(['POST'])
 def xbrl_mapping_api(request):
     """
     API to handle full XBRL Mapping JSON input and output.
@@ -56,7 +77,7 @@ def xbrl_mapping_api(request):
         
         return Response(serializer.errors, status=400)
 
-@api_view(['POST'])
+@api_decorator(['POST'])
 def upload_xbrl_json(request):
     """
     Endpoint to upload XBRL data in JSON format
@@ -71,7 +92,7 @@ def upload_xbrl_json(request):
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_decorator(['GET'])
 def get_xbrl_by_uen(request, uen):
     """
     Retrieve XBRL data by UEN (Unique Entity Number)
@@ -95,20 +116,83 @@ def direct_json_import(request):
     """
     if request.method == 'POST':
         try:
-            json_data = json.loads(request.body)
-            xbrl = XBRLJSONMapper.map_json_to_xbrl(json_data)
+            # Parse the JSON data from the request body
+            input_json = json.loads(request.body)
+            
+            # Transform the JSON data to match the expected format
+            transformed_json = transform_json_for_xbrl_mapper(input_json)
+            
+            # Use the mapper to create the XBRL object
+            xbrl = XBRLJSONMapper.map_json_to_xbrl(transformed_json)
             
             # Return the created object as JSON
             result = XBRLJSONMapper.export_xbrl_to_json(xbrl)
             return JsonResponse({"status": "success", "id": xbrl.id, "data": result})
+        except ValueError as e:
+            return JsonResponse({"status": "error", "message": f"Invalid JSON format: {str(e)}"}, status=400)
         except Exception as e:
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
     
-# views.py (continued)
     return JsonResponse({"error": "Only POST method is allowed"}, status=405)
 
+def transform_json_for_xbrl_mapper(input_json):
+    """
+    Transforms the input JSON to match the expected format for XBRLJSONMapper
+    
+    Args:
+        input_json (dict): The input JSON data in camelCase format
+        
+    Returns:
+        dict: The transformed JSON data in snake_case format
+    """
+    # Helper function to convert camelCase to snake_case
+    def camel_to_snake(name):
+        name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
+    
+    # Recursively transform keys in a dictionary
+    def transform_dict(d):
+        if not isinstance(d, dict):
+            return d
+        return {camel_to_snake(k): transform_dict(v) for k, v in d.items()}
+    
+    # Transform the main JSON structure
+    transformed = {}
+    
+    # Transform filing information
+    transformed['filing_information'] = transform_dict(input_json.get('filingInformation', {}))
+    
+    # Transform directors statement
+    transformed['directors_statement'] = transform_dict(input_json.get('directorsStatement', {}))
+    
+    # Transform audit report
+    transformed['audit_report'] = transform_dict(input_json.get('auditReport', {}))
+    
+    # Transform statement of financial position
+    fin_position = input_json.get('statementOfFinancialPosition', {})
+    transformed['statement_of_financial_position'] = {
+        'current_assets': transform_dict(fin_position.get('currentAssets', {})),
+        'noncurrent_assets': transform_dict(fin_position.get('nonCurrentAssets', {})),
+        'current_liabilities': transform_dict(fin_position.get('currentLiabilities', {})),
+        'noncurrent_liabilities': transform_dict(fin_position.get('nonCurrentLiabilities', {})),
+        'equity': transform_dict(fin_position.get('equity', {})),
+        'total_assets': fin_position.get('Assets', 0),
+        'total_liabilities': fin_position.get('Liabilities', 0)
+    }
+    
+    # Transform income statement
+    transformed['income_statement'] = transform_dict(input_json.get('incomeStatement', {}))
+    
+    # Transform notes
+    notes = input_json.get('notes', {})
+    transformed['notes'] = {
+        'trade_and_other_receivables': transform_dict(notes.get('tradeAndOtherReceivables', {})),
+        'trade_and_other_payables': transform_dict(notes.get('tradeAndOtherPayables', {}))
+    }
+    
+    return transformed
 
-@api_view(['GET'])
+@api_decorator(['GET'])
 def export_xbrl_json(request, pk):
     """
     Export XBRL data to JSON format
@@ -123,7 +207,7 @@ def export_xbrl_json(request, pk):
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
+@api_decorator(['POST'])
 def validate_xbrl_json(request):
     """
     Validate XBRL JSON data without saving to database
@@ -137,7 +221,7 @@ def validate_xbrl_json(request):
         return Response({"status": "error", "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_decorator(['GET'])
 def get_xbrl_template(request):
     """
     Get an empty XBRL JSON template
@@ -280,7 +364,7 @@ def get_xbrl_template(request):
     
     return Response(template)
 
-@api_view(['POST'])
+@api_decorator(['POST'])
 def bulk_operations(request):
     """
     Handle bulk operations for XBRL data
