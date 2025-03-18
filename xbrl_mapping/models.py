@@ -1,33 +1,55 @@
 from django.db import models
-from .choices import *
-from .validators import validate_currency_code, validate_iso_date, validate_uen
-from django.core.validators import RegexValidator
 import uuid
 
-class MappingInput(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    content = models.JSONField()  # Stores JSON data
+class XBRLFiling(models.TextChoices):
+    FULL = "Full", "Full"
+    PARTIAL = "Partial", "Partial"
+
+class FinancialStatementType(models.TextChoices):
+    COMPANY = "Company", "Company"
+    CONSOLIDATED = "Consolidated", "Consolidated"
+
+class AccountingStandard(models.TextChoices):
+    SFRS = "SFRS", "SFRS"
+    SFRS_SE = "SFRS for SE", "SFRS for SE"
+    IFRS = "IFRS", "IFRS"
+    OTHER = "Other", "Other"
+
+class StatementOfFinancialPositionType(models.TextChoices):
+    CLASSIFIED = "Classified", "Classified"
+    LIQUIDITY = "Liquidity-based", "Liquidity-based"
+
+class RoundingLevel(models.TextChoices):
+    THOUSANDS = "Thousands", "Thousands"
+    MILLIONS = "Millions", "Millions"
+    UNITS = "Units", "Units"
+
+class XBRLPreparationMethod(models.TextChoices):
+    AUTOMATED = "Automated", "Automated"
+    MANUAL = "Manual", "Manual"
+    HYBRID = "Hybrid", "Hybrid"
+
+class AuditOpinion(models.TextChoices):
+    UNQUALIFIED = "Unqualified", "Unqualified"
+    QUALIFIED = "Qualified", "Qualified"
+    ADVERSE = "Adverse", "Adverse"
+    DISCLAIMER = "Disclaimer", "Disclaimer"
 
 class FilingInformation(models.Model):
     """Basic entity and filing information"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_name = models.CharField(max_length=255)
     unique_entity_number = models.CharField(
-    max_length=10,  # Must allow 10 characters (9 digits + 1 uppercase letter)
-    unique=True,
-    validators=[
-        RegexValidator(
-            regex=r'^\d{9}[A-Z]$', 
-            message="UEN must be 9 digits followed by 1 uppercase letter"
-            )
-        ]
+        max_length=10,
+        unique=True
     )
-    current_period_start = models.CharField(validators=[validate_iso_date])
-    current_period_end = models.CharField(validators=[validate_iso_date])
-    prior_period_start = models.CharField(null=True, blank=True, validators=[validate_iso_date])
+    current_period_start = models.CharField(max_length=10)
+    current_period_end = models.CharField(max_length=10)
+    prior_period_start = models.CharField(max_length=10, null=True, blank=True)
     xbrl_filing_type = models.CharField(max_length=10, choices=XBRLFiling.choices)
     financial_statement_type = models.CharField(max_length=15, choices=FinancialStatementType.choices)
     accounting_standard = models.CharField(max_length=15, choices=AccountingStandard.choices, db_column='accounting_standard')
-    authorisation_date = models.CharField(validators=[validate_iso_date])
+    authorisation_date = models.CharField(max_length=10)
     financial_position_type = models.CharField(max_length=15, choices=StatementOfFinancialPositionType.choices)
     is_going_concern = models.BooleanField(db_column='is_going_concern')
     has_comparative_changes = models.BooleanField()
@@ -41,9 +63,8 @@ class FilingInformation(models.Model):
     ultimate_parent_name = models.CharField(max_length=255, null=True, blank=True)
     taxonomy_version = models.CharField(max_length=10, default="2022.2")
     xbrl_software = models.CharField(max_length=255)
-    xbrl_preparation_method = models.CharField(max_length=255)
+    xbrl_preparation_method = models.CharField(max_length=15, choices=XBRLPreparationMethod.choices)
     
-
 class DirectorsStatement(models.Model):
     filing = models.OneToOneField(FilingInformation, on_delete=models.CASCADE)
     directors_opinion_true_fair_view = models.BooleanField(db_column='directors_opinion_true_fair_view')
@@ -170,12 +191,21 @@ class IncomeStatement(models.Model):
 
 class TradeAndOtherReceivables(models.Model):
     """Trade and other receivables detail"""
-    filing = models.OneToOneField(FilingInformation, on_delete=models.CASCADE)
+    filing = models.ForeignKey(FilingInformation, on_delete=models.CASCADE, related_name='receivables')
     receivables_from_third_parties = models.FloatField(null=True, blank=True, help_text="Receivables from third parties. Common terms: third party receivables, external receivables")
     receivables_from_related_parties = models.FloatField(null=True, blank=True, help_text="Receivables from related parties. Common terms: related party receivables, intercompany receivables")
     unbilled_receivables = models.FloatField(null=True, blank=True, help_text="Unbilled receivables. Common terms: contract assets, accrued income, work completed not billed")
     other_receivables = models.FloatField(null=True, blank=True, help_text="Other receivables. Common terms: sundry receivables, miscellaneous receivables, deposits")
     total_trade_and_other_receivables = models.FloatField(help_text="Total trade and other receivables. Common terms: accounts receivable, debtors, total receivables")
+
+class TradeAndOtherPayables(models.Model):
+    """Trade and other payables detail"""
+    filing = models.OneToOneField(FilingInformation, on_delete=models.CASCADE, related_name='payables')
+    payables_to_third_parties = models.FloatField(null=True, blank=True, help_text="Payables to third parties")
+    payables_to_related_parties = models.FloatField(null=True, blank=True, help_text="Payables to related parties")
+    accrued_liabilities = models.FloatField(null=True, blank=True, help_text="Accrued liabilities")
+    other_payables = models.FloatField(null=True, blank=True, help_text="Other payables")
+    total_trade_and_other_payables = models.FloatField(help_text="Total trade and other payables")
 
 class Revenue(models.Model):
     """Revenue details"""
@@ -198,7 +228,7 @@ class Notes(models.Model):
         related_name='notes_receivables'
     )
     trade_and_other_payables = models.OneToOneField(
-        TradeAndOtherReceivables, 
+        TradeAndOtherPayables, 
         on_delete=models.CASCADE, 
         related_name='notes_payables'
     )

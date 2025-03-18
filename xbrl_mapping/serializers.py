@@ -1,22 +1,17 @@
-# serializers.py
 from rest_framework import serializers
 from .models import (
     FilingInformation, DirectorsStatement, AuditReport, 
-    CurrentAssets, MappingInput, NonCurrentAssets, CurrentLiabilities, 
+    CurrentAssets, NonCurrentAssets, CurrentLiabilities, 
     NonCurrentLiabilities, Equity, StatementOfFinancialPosition,
-    IncomeStatement, TradeAndOtherReceivables, Revenue, Notes, PartialXBRL
+    IncomeStatement, TradeAndOtherReceivables, Revenue, Notes, PartialXBRL,
+    TradeAndOtherPayables
 )
 
-
-class MappingInputSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MappingInput
-        fields = '__all__'  # Include all fields (id, content)
-        
 class FilingInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = FilingInformation
         fields = '__all__'
+        read_only_fields = ('id',)
 
 class DirectorsStatementSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,6 +69,11 @@ class TradeAndOtherReceivablesSerializer(serializers.ModelSerializer):
         model = TradeAndOtherReceivables
         fields = '__all__'
 
+class TradeAndOtherPayablesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TradeAndOtherPayables
+        fields = '__all__'
+
 class RevenueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Revenue
@@ -81,7 +81,7 @@ class RevenueSerializer(serializers.ModelSerializer):
 
 class NotesSerializer(serializers.ModelSerializer):
     trade_and_other_receivables = TradeAndOtherReceivablesSerializer()
-    trade_and_other_payables = TradeAndOtherReceivablesSerializer()
+    trade_and_other_payables = TradeAndOtherPayablesSerializer()
 
     class Meta:
         model = Notes
@@ -112,7 +112,6 @@ class PartialXBRLSerializer(serializers.ModelSerializer):
         current_liabilities_data = sof_position_data.pop('current_liabilities')
         noncurrent_liabilities_data = sof_position_data.pop('noncurrent_liabilities')
         equity_data = sof_position_data.pop('equity')
-        
         income_statement_data = validated_data.pop('income_statement')
         
         # Extract notes data and its nested components
@@ -150,7 +149,7 @@ class PartialXBRLSerializer(serializers.ModelSerializer):
         
         # Create notes components
         trade_receivables = TradeAndOtherReceivables.objects.create(filing=filing_info, **trade_receivables_data)
-        trade_payables = TradeAndOtherReceivables.objects.create(filing=filing_info, **trade_payables_data)
+        trade_payables = TradeAndOtherPayables.objects.create(filing=filing_info, **trade_payables_data)
         
         # Create notes
         notes = Notes.objects.create(
@@ -174,17 +173,117 @@ class PartialXBRLSerializer(serializers.ModelSerializer):
         return xbrl
 
     def update(self, instance, validated_data):
-        # Similar to create but update existing instances
-        # This would be a more complex implementation with many nested updates
-        # For brevity, only showing the pattern
+        # Handle nested updates
+        if 'filing_information' in validated_data:
+            filing_info_data = validated_data.pop('filing_information')
+            filing_info = instance.filing_information
+            for attr, value in filing_info_data.items():
+                setattr(filing_info, attr, value)
+            filing_info.save()
         
-        # Update filing information
-        filing_info_data = validated_data.pop('filing_information', {})
-        filing_info = instance.filing_information
-        for attr, value in filing_info_data.items():
-            setattr(filing_info, attr, value)
-        filing_info.save()
+        # Handle directors statement update
+        if 'directors_statement' in validated_data:
+            directors_data = validated_data.pop('directors_statement')
+            directors = instance.directors_statement
+            for attr, value in directors_data.items():
+                setattr(directors, attr, value)
+            directors.save()
         
-        # Similar updates would be needed for all other nested objects
+        # Handle audit report update
+        if 'audit_report' in validated_data:
+            audit_data = validated_data.pop('audit_report')
+            audit = instance.audit_report
+            for attr, value in audit_data.items():
+                setattr(audit, attr, value)
+            audit.save()
+        
+        # Handle statement of financial position and its nested components
+        if 'statement_of_financial_position' in validated_data:
+            sof_data = validated_data.pop('statement_of_financial_position')
+            sof = instance.statement_of_financial_position
+            
+            # Update current assets
+            if 'current_assets' in sof_data:
+                current_assets_data = sof_data.pop('current_assets')
+                current_assets = sof.current_assets
+                for attr, value in current_assets_data.items():
+                    setattr(current_assets, attr, value)
+                current_assets.save()
+            
+            # Update noncurrent assets
+            if 'noncurrent_assets' in sof_data:
+                noncurrent_assets_data = sof_data.pop('noncurrent_assets')
+                noncurrent_assets = sof.noncurrent_assets
+                for attr, value in noncurrent_assets_data.items():
+                    setattr(noncurrent_assets, attr, value)
+                noncurrent_assets.save()
+            
+            # Update current liabilities
+            if 'current_liabilities' in sof_data:
+                current_liabilities_data = sof_data.pop('current_liabilities')
+                current_liabilities = sof.current_liabilities
+                for attr, value in current_liabilities_data.items():
+                    setattr(current_liabilities, attr, value)
+                current_liabilities.save()
+            
+            # Update noncurrent liabilities
+            if 'noncurrent_liabilities' in sof_data:
+                noncurrent_liabilities_data = sof_data.pop('noncurrent_liabilities')
+                noncurrent_liabilities = sof.noncurrent_liabilities
+                for attr, value in noncurrent_liabilities_data.items():
+                    setattr(noncurrent_liabilities, attr, value)
+                noncurrent_liabilities.save()
+            
+            # Update equity
+            if 'equity' in sof_data:
+                equity_data = sof_data.pop('equity')
+                equity = sof.equity
+                for attr, value in equity_data.items():
+                    setattr(equity, attr, value)
+                equity.save()
+            
+            # Update remaining statement of financial position fields
+            for attr, value in sof_data.items():
+                setattr(sof, attr, value)
+            sof.save()
+        
+        # Handle income statement update
+        if 'income_statement' in validated_data:
+            income_data = validated_data.pop('income_statement')
+            income = instance.income_statement
+            for attr, value in income_data.items():
+                setattr(income, attr, value)
+            income.save()
+        
+        # Handle notes and its nested components
+        if 'notes' in validated_data:
+            notes_data = validated_data.pop('notes')
+            notes = instance.notes
+            
+            # Update trade and other receivables
+            if 'trade_and_other_receivables' in notes_data:
+                receivables_data = notes_data.pop('trade_and_other_receivables')
+                receivables = notes.trade_and_other_receivables
+                for attr, value in receivables_data.items():
+                    setattr(receivables, attr, value)
+                receivables.save()
+            
+            # Update trade and other payables
+            if 'trade_and_other_payables' in notes_data:
+                payables_data = notes_data.pop('trade_and_other_payables')
+                payables = notes.trade_and_other_payables
+                for attr, value in payables_data.items():
+                    setattr(payables, attr, value)
+                payables.save()
+            
+            # Update remaining notes fields
+            for attr, value in notes_data.items():
+                setattr(notes, attr, value)
+            notes.save()
+        
+        # Update remaining PartialXBRL fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
         
         return instance
