@@ -1,4 +1,3 @@
-# json_mapper.py
 import json
 import re
 from django.core.exceptions import ValidationError
@@ -6,7 +5,7 @@ from .models import (
     FilingInformation, DirectorsStatement, AuditReport, 
     CurrentAssets, NonCurrentAssets, CurrentLiabilities, 
     NonCurrentLiabilities, Equity, StatementOfFinancialPosition,
-    IncomeStatement, TradeAndOtherReceivables, Revenue, Notes, PartialXBRL
+    IncomeStatement, TradeAndOtherReceivables, Notes, PartialXBRL
 )
 
 class XBRLJSONMapper:
@@ -140,64 +139,6 @@ class XBRLJSONMapper:
         
         return xbrl
 
-    def transform_json_for_xbrl_mapper(input_json):
-        """
-        Transforms the input JSON to match the expected format for XBRLJSONMapper
-        
-        Args:
-            input_json (dict): The input JSON data in camelCase format
-            
-        Returns:
-            dict: The transformed JSON data in snake_case format
-        """
-        # Helper function to convert camelCase to snake_case
-        def camel_to_snake(name):
-            name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-            return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
-        
-        # Recursively transform keys in a dictionary
-        def transform_dict(d):
-            if not isinstance(d, dict):
-                return d
-            return {camel_to_snake(k): transform_dict(v) for k, v in d.items()}
-        
-        # Transform the main JSON structure
-        transformed = {}
-        
-        # Transform filing information
-        transformed['filing_information'] = transform_dict(input_json.get('filingInformation', {}))
-        
-        # Transform directors statement
-        transformed['directors_statement'] = transform_dict(input_json.get('directorsStatement', {}))
-        
-        # Transform audit report
-        transformed['audit_report'] = transform_dict(input_json.get('auditReport', {}))
-        
-        # Transform statement of financial position
-        fin_position = input_json.get('statementOfFinancialPosition', {})
-        transformed['statement_of_financial_position'] = {
-            'current_assets': transform_dict(fin_position.get('currentAssets', {})),
-            'noncurrent_assets': transform_dict(fin_position.get('nonCurrentAssets', {})),
-            'current_liabilities': transform_dict(fin_position.get('currentLiabilities', {})),
-            'noncurrent_liabilities': transform_dict(fin_position.get('nonCurrentLiabilities', {})),
-            'equity': transform_dict(fin_position.get('equity', {})),
-            'total_assets': fin_position.get('Assets', 0),
-            'total_liabilities': fin_position.get('Liabilities', 0)
-        }
-        
-        # Transform income statement
-        transformed['income_statement'] = transform_dict(input_json.get('incomeStatement', {}))
-        
-        # Transform notes
-        notes = input_json.get('notes', {})
-        transformed['notes'] = {
-            'trade_and_other_receivables': transform_dict(notes.get('tradeAndOtherReceivables', {})),
-            'trade_and_other_payables': transform_dict(notes.get('tradeAndOtherPayables', {}))
-        }
-        
-        return transformed
-
-
     @staticmethod
     def export_xbrl_to_json(xbrl_instance):
         """
@@ -280,7 +221,7 @@ class XBRLJSONMapper:
             "held_for_sale_assets": current_assets.held_for_sale_assets,
             "total_current_assets": current_assets.total_current_assets
         }
-    
+
     @staticmethod
     def _get_noncurrent_assets_dict(noncurrent_assets):
         """Helper method to convert NonCurrentAssets model to dict"""
@@ -299,7 +240,7 @@ class XBRLJSONMapper:
             "other_noncurrent_nonfinancial_assets": noncurrent_assets.other_noncurrent_nonfinancial_assets,
             "total_noncurrent_assets": noncurrent_assets.total_noncurrent_assets
         }
-    
+
     @staticmethod
     def _get_current_liabilities_dict(current_liabilities):
         """Helper method to convert CurrentLiabilities model to dict"""
@@ -315,7 +256,7 @@ class XBRLJSONMapper:
             "liabilities_held_for_sale": current_liabilities.liabilities_held_for_sale,
             "total_current_liabilities": current_liabilities.total_current_liabilities
         }
-    
+
     @staticmethod
     def _get_noncurrent_liabilities_dict(noncurrent_liabilities):
         """Helper method to convert NonCurrentLiabilities model to dict"""
@@ -330,7 +271,7 @@ class XBRLJSONMapper:
             "other_noncurrent_nonfinancial_liabilities": noncurrent_liabilities.other_noncurrent_nonfinancial_liabilities,
             "total_noncurrent_liabilities": noncurrent_liabilities.total_noncurrent_liabilities
         }
-    
+
     @staticmethod
     def _get_equity_dict(equity):
         """Helper method to convert Equity model to dict"""
@@ -342,7 +283,7 @@ class XBRLJSONMapper:
             "noncontrolling_interests": equity.noncontrolling_interests,
             "total_equity": equity.total_equity
         }
-    
+
     @staticmethod
     def _get_income_statement_dict(income_statement):
         """Helper method to convert IncomeStatement model to dict"""
@@ -366,7 +307,7 @@ class XBRLJSONMapper:
             "profit_loss_attributable_to_owners_of_company": income_statement.profit_loss_attributable_to_owners_of_company,
             "profit_loss_attributable_to_noncontrolling_interests": income_statement.profit_loss_attributable_to_noncontrolling_interests
         }
-    
+
     @staticmethod
     def _get_trade_receivables_dict(trade_receivables):
         """Helper method to convert TradeAndOtherReceivables model to dict"""
@@ -377,3 +318,79 @@ class XBRLJSONMapper:
             "other_receivables": trade_receivables.other_receivables,
             "total_trade_and_other_receivables": trade_receivables.total_trade_and_other_receivables
         }
+
+    @staticmethod
+    def _get_trade_payables_dict(trade_payables):
+        """Helper method to convert TradeAndOtherReceivables model used for payables to dict"""
+        return {
+            "receivables_from_third_parties": trade_payables.receivables_from_third_parties,
+            "receivables_from_related_parties": trade_payables.receivables_from_related_parties,
+            "unbilled_receivables": trade_payables.unbilled_receivables,
+            "other_receivables": trade_payables.other_receivables,
+            "total_trade_and_other_receivables": trade_payables.total_trade_and_other_receivables
+        }
+
+    def transform_json_for_xbrl_mapper(input_json):
+        """
+        Transforms the input JSON to match the expected format for XBRLJSONMapper
+        
+        Args:
+            input_json (dict): The input JSON data in camelCase format
+            
+        Returns:
+            dict: The transformed JSON data in snake_case format
+        """
+        # Helper function to convert camelCase to snake_case
+        def camel_to_snake(name):
+            name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+            return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
+        
+        # Recursively transform keys in a dictionary
+        def transform_dict(d):
+            if not isinstance(d, dict):
+                return d
+            return {camel_to_snake(k): transform_dict(v) for k, v in d.items()}
+        
+        # Transform the main JSON structure
+        transformed = {}
+        
+        # Transform filing information
+        transformed['filing_information'] = transform_dict(input_json.get('filingInformation', {}))
+        
+        # Transform directors statement
+        transformed['directors_statement'] = transform_dict(input_json.get('directorsStatement', {}))
+        
+        # Transform audit report
+        transformed['audit_report'] = transform_dict(input_json.get('auditReport', {}))
+        
+        # Transform statement of financial position
+        fin_position = input_json.get('statementOfFinancialPosition', {})
+        transformed['statement_of_financial_position'] = {
+            'current_assets': transform_dict(fin_position.get('currentAssets', {})),
+            'noncurrent_assets': transform_dict(fin_position.get('nonCurrentAssets', {})),
+            'current_liabilities': transform_dict(fin_position.get('currentLiabilities', {})),
+            'noncurrent_liabilities': transform_dict(fin_position.get('nonCurrentLiabilities', {})),
+            'equity': transform_dict(fin_position.get('equity', {})),
+            'total_assets': fin_position.get('Assets', 0),
+            'total_liabilities': fin_position.get('Liabilities', 0)
+        }
+        
+        # Transform income statement
+        transformed['income_statement'] = transform_dict(input_json.get('incomeStatement', {}))
+        
+        # Transform notes
+        notes = input_json.get('notes', {})
+        transformed['notes'] = {
+            'trade_and_other_receivables': transform_dict(notes.get('tradeAndOtherReceivables', {})),
+            'trade_and_other_payables': transform_dict(notes.get('tradeAndOtherPayables', {}))
+        }
+        
+        return transformed
+
+    
+    
+    
+    
+    
+    
+    
